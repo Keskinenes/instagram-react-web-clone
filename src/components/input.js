@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 
 export default function Input({ label, type = 'text', ...props }) {
 
-    const inputRef = useRef()
     const [show, setShow] = useState(false)
     const [inputType, setType] = useState(type)
 
@@ -10,11 +9,9 @@ export default function Input({ label, type = 'text', ...props }) {
     useEffect(() => {
         if (show) {
             setType('text')
-            inputRef.current.focus()
         }
         else if (type == 'password') {
             setType('password')
-            inputRef.current.focus()
         }
 
     }, [show])
@@ -23,12 +20,12 @@ export default function Input({ label, type = 'text', ...props }) {
 
     return (
         <label className="block relative flex bg-zinc-50 border rounded-sm focus-within:border-gray-400 " >
-            <input ref={inputRef} required={true} type={inputType} className=" px-2 outline-none  w-full h-[38px] text-xs valid:pt-[10px] peer" {...props} />
+            <input required={true} type={inputType} className=" px-2 outline-none  w-full h-[38px] text-xs valid:pt-[10px] peer" {...props} />
             <small className="absolute top-1/2 left-[9px] text-xs cursor-text text-gray-400 -translate-y-1/2 peer-valid:top-2 peer-valid:">{label}</small>
             {type == 'password' && props?.value && (
-                <button type="button" onClick={() => setShow(show => !show)} className="h-full  flex items-center text-sm font-semibold pr-2">
+                <div type="button" onClick={() => setShow(show => !show)} className=" select-none cursor-pointer h-full  flex items-center text-sm font-semibold pr-2">
                     {show ? 'Hide' : 'Show'}
-                </button>
+                </div>
             )}
         </label>
     )
